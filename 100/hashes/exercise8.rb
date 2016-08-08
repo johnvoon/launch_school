@@ -1,0 +1,1 @@
+puts "B is the likely problem, ie. there is no method called keys for Arrray objects"

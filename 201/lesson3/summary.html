@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Summary</title>
+  <style type="text/css">
+    .cf::before, .cf::after {
+      display: block;
+      content: "";
+    }
+
+    .cf::after {
+      clear: both;
+    }
+
+    body {
+      font: normal 16px Helvetica, Arial ,sans-serif;
+    }
+
+    h1, h3 {
+      color: #0050A6;
+    }
+
+    code {
+      background-color: #E7E7E7;
+      color: black;
+    }
+
+    section .border {
+      width: 650px;
+      border: 2px dashed #555;
+      padding: 30px;
+    }
+
+    section a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    section .inline-margin a {
+      margin: 30px;
+    }
+
+    section .inline-padding a {
+      padding: 30px;
+      background: green;
+      color: #fff;
+    }
+
+    section .inline-float a {
+      text-align: center;
+      float: left;
+      width: 120px;
+      padding: 25px;
+      margin: 15px;
+      border: 3px solid black;
+    }
+
+    .block .box-1 {
+      background: dodgerblue;
+      color: #fff;
+    }
+
+    .block .box-2 {
+      background: green;
+      color: #fff;
+      height: 60px;
+      padding: 20px;
+      margin: 20px;
+      border: 1px solid green;
+    }
+
+    .block .box-3 {
+      background: tomato;
+      color: #fff;
+      width: 90px;
+    }
+
+    .block .no-float {
+      background: dodgerblue;
+      color: #fff;
+      border: 1px solid red;
+    }
+
+    .block #float-left {
+      background: dodgerblue;
+      color: #fff;
+      border: 1px solid red;
+      float: left;
+    }
+
+    .block #float-right {
+      background: tomato;
+      color: #fff;
+      border: 1px solid blue;
+      float: right;
+    }
+
+    .block #float-left-set-wh {
+      background: dodgerblue;
+      color: #fff;
+      border: 1px solid red;
+      float: left; 
+      width: 400px;
+      height: 70px;
+      text-align: center;
+      line-height: 70px;
+    }
+
+    .block #float-right-set-wh {
+      background: tomato;
+      color: #fff;
+      border: 1px solid blue;
+      float: right;
+      width: 500px;
+      height: 70px; 
+      text-align: center;
+      line-height: 70px;
+    }
+
+
+
+
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <section>
+    <h1>Inline Elements</h1>
+    <p><code>inline</code> elements always fit to content and are unaffected by <code>width</code> and <code>height</code> values.</p>
+
+    <figure>
+      <div class="border">
+        <a href="#">Home</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Contact</a>
+      </div>
+      <figcaption>Example with anchor tags</figcaption>
+    </figure>
+
+    <p><code>inline</code> elements accept margin and padding but only push other elements horizontally away, not vertically.</p>
+
+    <figure>
+      <div class="border inline-margin">
+        <a href="#">Home</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Contact</a>
+      </div>  
+      <figcaption><code>30px</code> margin has been set on all sides of the anchor tags.</figcaption>
+    </figure>
+
+    <figure>
+      <div class="border inline-padding">
+        <a href="#">Home</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Contact</a>
+      </div>
+      <figcaption>Inline elements are affected by padding values on all sides.</figcaption>
+    </figure>
+  </section>
+
+  <section class=block>
+    <h1>Block Elements</h1>
+
+    <p>A number of elements are set to <code>block</code> by the browser user agent stylesheet, e.g. container elements like <code>div</code>, <code>section</code> and <code>ul</code> and text elements like <code>p</code> and <code>h1</code>.</p>
+
+    <p>Default <code>display</code> values can be overridden.</p>
+
+    <p>Provided no width is set, <code>block</code> elements take up the width of the page or parent container.</p> 
+
+    <p>They respond to <code>width</code>, <code>height</code>, <code>margin</code> and <code>padding</code>. <code>height</code> will adjust to fit content if not set.</p>
+
+    <p>If width is set, you can set <code>margin: 0 auto</code> to horizontally centre the element within the container.</p>
+
+    <p>If max-width is set, element width will automatically adjust as windows is re-sized.</p>
+
+    <div class="wrapper">
+      <div class="box-1"><code>width: 0</code>; <code>height: 0</code></div>
+
+      <div class="box-2"><code>width: 0</code>; <code>height: 60px</code>; <code>padding: 20px</code>; <code>margin: 20px</code>.</div>
+
+      <div class="box-3"><code>width: 90px</code>; <code>height: 0</code>.</div>
+    </div>
+
+    <h1>Inline-Block Elements</h1>
+
+    <p><code>inline-block</code> elements stay inline with the natural flow of text, but you can consistently apply block element properties to them, such as <code>width</code>, <code>height</code>, <code>margins</code>, <code>padding</code> and <code>vertical-align</code> while remaining an <code>inline</code> element. They behave similarly to a float in that several inline-block elements will line up horizontally. <code>inline-block</code> elements are therefore incredibly useful when you want to align block elements horizontally in rows.</p>
+
+    <p>For example, in blogs, we frequently use unordered lists for the navigation menu. Turning that list horizontal would require you to float all menu items left or right, then deal with the height of the containing element using a clearfix, etc. All of these problems are resolved by applying <code>display: inline-block</code> to all the <code>li</code> elements, which are <code>block</code> level elements by default. As shown in the above example with the anchor elements, you can make them fill up the space by applying <code>display: block</code> to them.</p>
+
+    <p>The advantage of inline-block elements is you don't have to clear them to stop the parent from collapsing around them.</p>
+
+    <p>Also, you can use <code>vertical-align: middle</code>, <code>line-height</code> and <code>text-align: center</code> to perfectly center the elements, in an intuitive way.</p>
+
+    <p>E.g. if you have elements of differing dimensions, you can create different effects like so:</p>
+
+    <figure>
+      <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2011/03/inline-block-nav2.png" alt="Elements of differing dimensions can be vertically aligned to the middle">
+      <figcaption>The top navigation bar uses <code>vertical-align: middle</code>. The bottom navigation bar uses <code>vertical-align: bottom</code>.</figcaption>
+    </figure>
+
+    <h3>Example: Using <code>inline-block</code> to create a nav bar.</h3>
+
+    <p>The result is the same as when we floated the <code>inline</code> anchor elements to give them <code>block</code> element properties. You get the properties of both <code>inline</code> elements and <code>block</code> elements.</p>
+
+    <section>
+      <h1>Float</h1>
+
+      <p>Only <code>position: static</code> and <code>position: relative</code> elements will accept <code>float</code> properties.</p>
+
+      <p>A floated element is taken out of normal flow then shifted left or right.</p> 
+
+      <p>A floated element is automatically <code>display: block</code>. Elements which are <code>display: block</code> by default remain so when floated. Therefore, floated <code>inline</code> elements will respond to <code>margin</code>, <code>padding</code>, <code>height</code> and <code>width</code> values.</p>
+
+      <p>The advantage of using floats is that when images are resized, surrounding text will reflow to accommodate it. Not the case for <code>position: relative</code> and <code>position: absolute though</code></p>
+
+      <figure>
+        <img src="https://css-tricks.com/wp-content/csstricks-uploads/reflow-example-1.png" alt="Text reflowed to fit around a floated element">
+        <figcaption>Text reflowed to fit around a floated element</figcaption>
+      </figure>
+
+      <figure>
+        <img src="https://css-tricks.com/wp-content/csstricks-uploads/reflow-example-2.png" alt="Text not reflowed to fit around an absolutely positioned image">
+        <figcaption>Text not reflowed to fit around an absolutely positioned image</figcaption>
+      </figure>
+
+      <div class="border inline-padding inline-float cf">
+        <a href="#">Home</a>
+        <a href="#">Portfolio</a>
+        <a href="#">Contact</a>
+      </div>
+
+      <h3>Floating Block Elements</h3>
+
+      <h3>No <code>width</code> and <code>height</code> set</h3>
+
+      <div class="wrapper">
+        <div class="no-float">Box - 1 - No float applied</div>
+        <div class="no-float">Box - 2 - No float applied</div>
+      </div>
+
+      <p><code>block</code> elements with no float applied. As no width is set, they take up the entire width of the content box of the ancestor element.</p>
+
+      <div class="wrapper cf">
+        <div id="float-left">Box - 1 - Floated Left</div>
+        <div id="float-right">Box - 2 - Floated Right</div>
+      </div>
+
+      <p><code>div</code>s floated left and right. They are on the same line as floated <code>block</code> elements occupy the same line as previous floated <code>block</code> elements as long as there is space. Furthermore, they shrink to fit the content as no width was specified.</p>
+
+      <div class="wrapper cf">
+        <div id="float-left">Box - 1 - Floated Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left Float Left </div>
+        <div id="float-right">Box - 2 - Floated Right Floated Right Floated Right Floated Right Floated Right Floated Right Floated Right Floated Right Floated Right Floated Right Floated Right Floated Right</div>
+      </div>
+
+      <p>If we add more content such that they would have to take up the entire line, see how our third pair of <code>div</code>s behaves.</p>
+
+      <h3>Floating <code>block</code> elements with set width and height</h3>
+      
+      <div class="wrapper cf">
+        <div id="float-left-set-wh">Box - 1 - Floated Left</div>
+        <div id="float-right-set-wh">Box - 2 - Floated Right</div>
+      </div>
+
+      <p>As the above <code>divs</code> respond to <code>width</code> and <code>height</code> values, this proves that floated <code>block</code> elements remain as <code>block</code> elements. Take note that floated <code>inline</code> or <code>inline-block</code> elements become <code>block elements</code>.</p>
+
+      <h3>Clearing Floats</h3>
+
+      <div>Box 1</div>
+      <div>Box 2</div>
+      <div>Box 3</div>
+
+      <p><code>float</code>'s sister property is <code>clear</code>. To prevent elements after a floated element in the HTML wrapping around floated elements, we apply <code>clear: both</code> to the <code>div</code> following the floated elements so that it moves itself down past the float.
+
+      <p>Clearing <code>left</code> or <code>right</code> is less common but nevertheless has its specific use cases:</p>
+
+      <figure>
+        <img src="https://css-tricks.com/wp-content/csstricks-uploads/directionalclearing.png" alt="Using clear: right">
+        <figcaption>Using <code>clear: right</code></figcaption>
+      </figure>
+
+      <h3>The great collapse</h3>
+
+      <p>If a parent element contains only floated elements, its height collapses. We fix it by clearing the float after the floated elements in the container</p>
+
+      <p>If you always know what the succeeding element will be, you can apply <code>clear: both</code> to it and go about your business. If not, there are other tools and hacks:</p>
+
+      <ul>
+        <li><b>The Empty Div Method:</b> Sometimes you will see a <code>br</code> element but an empty <code>div</code> is most common because it has no browser default styling, no special function, and is unlikely to be generically styled with CSS. But scorned by semantic purists as it adds no contextual meaning to the page and is purely for presentation. But it gets the job done.</li>
+        <li><b>The Overflow Method:</b> Set <code>overflow</code> on parent container to <code>auto</code> or <code>hidden</code> and it will expand to contain the floats; succeeding elements will clear them. 
+
+        <p>This makes the parent establishe a <strong>block formatting context</strong> and "take responsibility" for its content.</p>
+
+        <p>Floats, absolutely positioned elements, block containers that are not block boxes (e.g. <code>inline-block</code>), and block boxes with <code>overflow</code> other than <code>visible</code> establish new block formatting contexts for their contents.</p>
+
+        <p>This method can be beautifully semantic but be careful not to accidentally hide content or trigger unwanted scrollbars!</p>
+
+        <p>As <code>overflow: hidden</code> creates a new block formatting context, this is useful to align a <code>block</code> element next to a floated one rather than allow its content to wrap around the floated element.</p>
+
+        In a block formatting context, boxes are laid out one after the other, vertically, beginning at the top of a containing block. The vertical distance between them is determined by <code>margin</code>. Vertical margins between adjacent <code>block</code> boxes in a block formatting context collapse. In a new block formatting context, each box's leftmost edge touches the leftmost edge of the containing block (for left-to-right formatting). This is true even in the presence of floats (although line boxes may shrink due to floats), <strong>unless</strong> the box establishes a new block formatting context, in which case the box would align next to the float and its width would shrink.
+
+        See <a href="http://stackoverflow.com/questions/6196725/how-does-the-css-block-formatting-context-work"> this stackoverflow answer</a> for more details.</li>
+        <li><b>The Clearfix Method:</b> Adds a clever CSS pseudo element after the parent element which clears the floats.
+        <pre><code>.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  }</code></pre></li>
+      </ul>
+
+      <h3>Example</h3>
+
+      <figure>
+        <img src="https://css-tricks.com/wp-content/csstricks-uploads/grid-blocks.png" alt="Deciding which method to use to clear floats">
+        <figcaption>If we want each colour to have their own row, we can use <code>overflow</code> or <code>clearfix</code> if each colour group had a parent element. Or we could insert an empty <code>div</code> after each row.</figcaption>
+      </figure>
+    </section>
+
+    <h1>Positioning</h1>
+
+    <p>Floats are of limited use as they can only position elements left and right. There are 4 types of positioning:</p>
+
+    <ul>
+      <li>Static</li>
+      <li>Fixed</li>
+      <li>Relative</li>
+      <li>Absolute</li>
+    </ul>
+
+    <h3>Containing blocks of different elements</h3>
+
+    <p>The <code>position</code> property manipulates the location of an element.</p>
+
+    <p>Positions or dimensions of elements are relative to the containing block.</p>
+
+    <p>The dimensions of the initial containing block, being the root element, is same as the viewport.</p>
+    
+    <ul>
+      <li><code>static</code>/<code>relative</code>: Content box of nearest ancestor whose <code>display</code> is <code>block</code> or <code>inline-block</code>;</li>
+      <li><code>absolute</code>: Padding box of nearest ancestor whose <code>position</code> is <code>absolute</code>, <code>fixed</code> or <code>relative</code>;</li>
+      <li><code>fixed</code>: Viewport</li>
+    </ul>
+
+    <h3>Static</h3>
+
+    <p>Default position for all elements, meaning no position setting. Element remains in normal document flow. <code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code> and <code>z-index</code> have NO effect.</p>
+
+    <h3>Fixed</h3>
+
+    <p>Element removed from normal flow of document and positioned relative to the viewport, unaffected by scrolling. <code>top</code>, <code>right</code>, <code>bottom</code> and <code>left</code> properties are used to position <code>fixed</code> elements.</p>
+
+    <p>The blue box on the bottom left of the page is a fixed position element.</p>
+
+    <h1>Relative</h1>
+
+    <p>No immediate effect on positioning. But activates <code>top</code>, <code>bottom</code>, <code>left</code> or <code>right</code> to move the element relative to its place in the document. Remains in normal document flow and surrounding elements will remain unmoved.</p>
+
+    <p>Setting <code>relative</code> position also activates <code>z-index</code> on that element. Even if no <code>z-index</code> value is set, this element will be placed on top of <code>static</code> positioned elements.</p>
+
+    <div>I'm a relatively positioned box!</div>
+
+    <p>Lorem ipsum dolor sit amet,</p>
+
+    <h1>Absolute</h1>
+
+    <p>Removes element from document's normal flow. Thus, the space it once occupied will be taken up by other elements.</p>
+
+    <p><code>absolute</code> position elements are positioned relative to their closest <code>relative</code> position ancestor. If such element does not exist, they will be positioned relative to the <code>body</code> element.</p> 
+
+    <p>This section containing block is set to <code>position: relative</code> and the absolutely positioned element (the green box above) is positioned within this <code>section</code> containing block.</p>
+
+    <p>Take note that <code>position: absolute</code> <code>inline</code> and <code>inline-block</code> elements become <code>block</code> elements and therefore respond to <code>width</code> and <code>height</code> values.</p>
+  </section>
+</div>
+
+</body>
+</html>

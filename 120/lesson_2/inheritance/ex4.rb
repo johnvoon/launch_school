@@ -1,0 +1,1 @@
+The method lookup path is the order in which Ruby looks up a method called on a particular object instance. 

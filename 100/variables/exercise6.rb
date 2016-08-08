@@ -1,0 +1,1 @@
+# on the third line of irb, reference is made to a variable that is not defined or outside the scope of which it is being called

@@ -1,0 +1,2 @@
+# The error arises when the execute method (which is supposed to take a block as an argument) is called
+# The error arises as the execute method "block" parameter does not actually take a block as an argument, syntax should be &block

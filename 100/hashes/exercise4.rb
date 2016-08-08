@@ -1,0 +1,1 @@
+puts "the name of person can be accessed by person[:name]"
