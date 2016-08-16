@@ -116,16 +116,20 @@ class Computer < Player
 
   def set_name
     puts "\nChoose who you'd like to play against:"
-    COMPUTER_NAMES.each_with_index do |name, index|
-      puts "#{index + 1}. #{name} (#{name[0].downcase})"
-    end
+    list_computer_names
     answer = gets.chomp.downcase
-    self.name = process_answer(answer)
+    self.name = process(answer)
   end
 
   private
 
-  def process_answer(answer)
+  def list_computer_names
+    COMPUTER_NAMES.each_with_index do |name, index|
+      puts "#{index + 1}. #{name} (#{name[0].downcase})"
+    end
+  end
+
+  def process(answer)
     if %w(1 c clueless).include?(answer)
       "Clueless"
     elsif %w(2 a amateur).include?(answer)
