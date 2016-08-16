@@ -1,34 +1,20 @@
-class Player
-  attr_accessor :marker, :name
-  attr_reader :all_moves_made
+def two_identical_human_markers?(array_markers)
+  human_marker_count = array_markers.count do |square_value|
+    square_value == "X"
+  end
+  human_marker_count == 2
+end
 
-  def initialize(marker)
-    @marker = marker
-    @all_moves_made = []
-    @name = ''
+def at_risk_square
+  markers_on_line = ["X", "X", 3]
+  if  two_identical_human_markers?(markers_on_line) &&
+      markers_on_line.one? do |square_value|
+        square_value.is_a?(Integer)
+      end
+    markers_on_line.select do |square_value| 
+      square_value == square_value.to_i
+    end.first
   end
 end
 
-class Computer < Player
-  COMPUTER_NAMES = %w(Clueless Amateur Intelligent)
-
-  def set_name
-    puts "\nChoose who you'd like to play against:"
-    COMPUTER_NAMES.each_with_index do |name, index| 
-      puts "#{index + 1}. #{name} (#{name[0].downcase})"
-    end
-
-    answer = gets.chomp.downcase
-
-    if %w(1 c clueless).include?(answer)
-      self.name = "Clueless"
-    elsif %w(2 a amateur).include?(answer)
-      self.name = "Amateur"
-    elsif %w(2 i intelligent).include?(answer)
-      self.name = "Intelligent"
-    end
-  end
-end
-
-new_computer = Computer.new("X")
-p new_computer.marker
+p at_risk_square

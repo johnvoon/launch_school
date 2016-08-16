@@ -2,6 +2,8 @@ require 'pry'
 
 # keeps track of state of the board
 class Board
+  attr_accessor :all_squares
+
   LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
           [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
           [[1, 5, 9], [3, 5, 7]]
@@ -13,31 +15,31 @@ class Board
 
   def draw
     puts '     |     |'
-    puts "  #{@all_squares[1]}  |  #{@all_squares[2]}  |  #{@all_squares[3]}  "
+    puts "  #{all_squares[1]}  |  #{all_squares[2]}  |  #{all_squares[3]}  "
     puts '     |     |'
-    puts "-----+-----+-----"
+    puts '-----+-----+-----'
     puts '     |     |'
-    puts "  #{@all_squares[4]}  |  #{@all_squares[5]}  |  #{@all_squares[6]}  "
+    puts "  #{all_squares[4]}  |  #{all_squares[5]}  |  #{all_squares[6]}  "
     puts '     |     |'
-    puts "-----+-----+-----"
+    puts '-----+-----+-----'
     puts '     |     |'
-    puts "  #{@all_squares[7]}  |  #{@all_squares[8]}  |  #{@all_squares[9]}  "
+    puts "  #{all_squares[7]}  |  #{all_squares[8]}  |  #{all_squares[9]}  "
     puts '     |     |'
   end
 
   def reset
     (1..9).each do |square_number|
-      @all_squares[square_number] = square_number
+      all_squares[square_number] = square_number
     end
   end
 
   def []=(square_number, marker)
-    @all_squares[square_number] = marker
+    all_squares[square_number] = marker
   end
 
   def available_squares
-    @all_squares.keys.select do |square_number|
-      @all_squares[square_number] == @all_squares[square_number].to_i
+    all_squares.keys.select do |square_number|
+      all_squares[square_number] == all_squares[square_number].to_i
     end
   end
 
@@ -49,47 +51,9 @@ class Board
     !!return_winning_marker
   end
 
-  def two_identical_human_markers?(array_markers)
-    human_marker_count = array_markers.count do |square_value|
-      square_value == human.marker
-    end
-    human_marker_count == 2
-  end
-
-  def at_risk_square
-    LINES.each do |line|
-      markers_on_line = @all_squares.values_at(*line)
-      if  two_identical_human_markers?(markers_on_line) &&
-          markers_on_line.one? do |square_value|
-            square_value.is_a?(Integer)
-          end
-        markers_on_line.select {|square_value| square_value.to_i} 
-      end
-    end
-  end
-
-  def two_identical_computer_markers?(array_markers)
-    computer_marker_count = array_markers.count do |square_value|
-      square_value == computer.marker
-    end
-    computer_marker_count == 2
-  end
-
-  def winning_square
-    LINES.each do |line|
-      markers_on_line = @all_squares.values_at(*line)
-      if  two_identical_computer_markers?(markers_on_line) &&
-          markers_on_line.one? do |square_value|
-            square_value.is_a?(Integer)
-          end
-        markers_on_line.select {|square_value| square_value.to_i} 
-      end
-    end
-  end
-
   def return_winning_marker
     LINES.each do |line|
-      markers_on_line = @all_squares.values_at(*line)
+      markers_on_line = all_squares.values_at(*line)
       if three_identical_markers?(markers_on_line)
         return markers_on_line.first
       end
@@ -111,15 +75,6 @@ class Score
   def initialize
     @human_score = 0
     @computer_score = 0
-  end
-
-  def register_score
-    case board.return_winning_marker
-    when human.marker
-      self.human_score += 1
-    when computer.marker
-      self.computer_score += 1
-    end
   end
 
   def reset_score
@@ -176,14 +131,18 @@ class Computer < Player
       self.name = "Clueless"
     elsif %w(2 a amateur).include?(answer)
       self.name = "Amateur"
-    elsif %w(2 i intelligent).include?(answer)
+    elsif %w(3 i intelligent).include?(answer)
       self.name = "Intelligent"
+    else 
+      puts "Not a valid choice. You'll play against the default computer."
+      self.name = "Clueless"
     end
   end
 end
 
 class TTTGame
-  attr_reader :board, :human, :computer, :score, :round_number
+  attr_reader :board, :human, :computer
+  attr_accessor :score, :round_number
 
   X_MARKER = 'X'
   O_MARKER = 'O'
@@ -203,6 +162,7 @@ class TTTGame
     set_human_name
     display_instructions
     set_computer_name
+    display_computer_name
     assign_player_markers
     loop do
       loop do
@@ -362,12 +322,14 @@ class TTTGame
     if computer.name == "Clueless"
       computer_choice = board.available_squares.sample
     elsif computer.name == "Amateur"
-      if board.available_squares.include?(board.winning_square)
-        computer_choice = board.winning_square
+      if board.available_squares.include?(winning_square)
+        computer_choice = winning_square
       elsif board.available_squares.include?(5)
         computer_choice = 5
-      elsif board.available_squares.include?(board.at_risk_square)
-        computer_choice = board.at_risk_square
+      elsif board.available_squares.include?(at_risk_square)
+        computer_choice = at_risk_square
+      else
+        computer_choice = board.available_squares.sample 
       end
     elsif computer.name == "Intelligent"
       computer_choice = board.available_squares.sample
@@ -388,6 +350,48 @@ class TTTGame
     puts "#{computer.name} chose square #{computer.all_moves_made.last}."
   end
 
+  def two_identical_human_markers?(array_markers)
+    human_marker_count = array_markers.count do |square_value|
+      square_value == human.marker
+    end
+    human_marker_count == 2
+  end
+
+  def at_risk_square
+    Board::LINES.each do |line|
+      markers_on_line = board.all_squares.values_at(*line)
+      if  two_identical_human_markers?(markers_on_line) &&
+          markers_on_line.one? do |square_value|
+            square_value.is_a?(Integer)
+          end
+        return markers_on_line.select do |square_value| 
+          square_value == square_value.to_i
+        end.first
+      end
+    end
+  end
+
+  def two_identical_computer_markers?(array_markers)
+    computer_marker_count = array_markers.count do |square_value|
+      square_value == computer.marker
+    end
+    computer_marker_count == 2
+  end
+
+  def winning_square
+    Board::LINES.each do |line|
+      markers_on_line = board.all_squares.values_at(*line)
+      if  two_identical_computer_markers?(markers_on_line) &&
+          markers_on_line.one? do |square_value|
+            square_value.is_a?(Integer)
+          end
+        return markers_on_line.select do |square_value| 
+          square_value == square_value.to_i
+        end.first
+      end
+    end
+  end
+
   def display_round_winner
     clear_screen_and_display_board
 
@@ -401,7 +405,7 @@ class TTTGame
     end
   end
 
-  def display_computer_personality
+  def display_computer_name
     puts "You are now playing against #{computer.name}."
   end
 
@@ -415,6 +419,15 @@ class TTTGame
 
   def display_round_number
     puts "\nROUND NUMBER: #{round_number}"
+  end
+
+  def register_score
+    case board.return_winning_marker
+    when human.marker
+      score.human_score += 1
+    when computer.marker
+      score.computer_score += 1
+    end
   end
 
   def display_score
@@ -451,7 +464,7 @@ class TTTGame
   end
 
   def reset_game
-    reset_score
+    score.reset_score
     reset_round_number
   end
 
