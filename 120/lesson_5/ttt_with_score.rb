@@ -1,6 +1,3 @@
-require 'pry'
-
-# keeps track of state of the board
 class Board
   attr_accessor :all_squares
 
@@ -68,7 +65,6 @@ class Board
   end
 end
 
-# tracks human and computer score
 class Score
   attr_accessor :human_score, :computer_score
 
@@ -87,7 +83,6 @@ class Score
   end
 end
 
-# keeps track of player marker, name, and moves made
 class Player
   attr_accessor :marker, :name
   attr_reader :all_moves_made
@@ -109,7 +104,7 @@ class Human < Player
     answer = ''
     loop do
       answer = gets.chomp
-      break unless answer =~ /\A\s+\z/
+      break unless answer =~ /^$|\A\s+\z/
       puts "Please enter your name to continue."
     end
     self.name = capitalize(answer)
@@ -117,25 +112,27 @@ class Human < Player
 end
 
 class Computer < Player
-  COMPUTER_NAMES = %w(Clueless Amateur Intelligent)
+  COMPUTER_NAMES = %w(Clueless Amateur).freeze
 
   def set_name
     puts "\nChoose who you'd like to play against:"
-    COMPUTER_NAMES.each_with_index do |name, index| 
+    COMPUTER_NAMES.each_with_index do |name, index|
       puts "#{index + 1}. #{name} (#{name[0].downcase})"
     end
-
     answer = gets.chomp.downcase
+    self.name = process_answer(answer)
+  end
 
+  private
+
+  def process_answer(answer)
     if %w(1 c clueless).include?(answer)
-      self.name = "Clueless"
+      "Clueless"
     elsif %w(2 a amateur).include?(answer)
-      self.name = "Amateur"
-    elsif %w(3 i intelligent).include?(answer)
-      self.name = "Intelligent"
-    else 
+      "Amateur"
+    else
       puts "Not a valid choice. You'll play against the default computer."
-      self.name = "Clueless"
+      "Clueless"
     end
   end
 end
@@ -144,8 +141,8 @@ class TTTGame
   attr_reader :board, :human, :computer
   attr_accessor :score, :round_number
 
-  X_MARKER = 'X'
-  O_MARKER = 'O'
+  X_MARKER = 'X'.freeze
+  O_MARKER = 'O'.freeze
 
   def initialize
     @board = Board.new
@@ -164,21 +161,7 @@ class TTTGame
     set_computer_name
     display_computer_name
     assign_player_markers
-    loop do
-      loop do
-        break if score.someone_won_match?
-        set_current_player
-        players_move
-        display_round_winner
-        register_score
-        increment_round_number
-        reset_board
-      end
-      display_board
-      display_winner
-      break unless play_again?
-      reset_game
-    end
+    main_game_loop
     display_goodbye_message
   end
 
@@ -220,7 +203,7 @@ class TTTGame
         computer.marker = O_MARKER
       else
         human.marker = O_MARKER
-        computer.marker = X_MARKER   
+        computer.marker = X_MARKER
       end
     else
       puts  'That marker is not available. '\
@@ -229,8 +212,27 @@ class TTTGame
     end
   end
 
+  def main_game_loop
+    loop do
+      loop do
+        break if score.someone_won_match?
+        set_current_player
+        players_move
+        display_round_winner
+        register_score
+        increment_round_number
+        reset_board
+      end
+      display_board
+      display_winner
+      break unless play_again?
+      reset_game
+    end
+  end
+
   def display_markers
-    puts  "You're using marker #{human.marker}. #{computer.name} is using marker #{computer.marker}."
+    puts "You're using marker #{human.marker}. "\
+         "#{computer.name} is using marker #{computer.marker}."
   end
 
   def display_board
@@ -240,17 +242,6 @@ class TTTGame
     puts ''
     board.draw
     puts ''
-  end
-
-  def players_move
-    loop do
-      clear_screen_and_display_board
-      current_player_moves
-      clear_screen_and_display_board
-      display_computer_move if computer_turn?
-      break if board.someone_won_round? || board.full?
-      switch_current_player
-    end
   end
 
   def clear_screen_and_display_board
@@ -271,11 +262,23 @@ class TTTGame
   end
 
   def set_current_player
-    if human_goes_first?
-      @current_marker = human.marker
-    else
-      @current_marker = computer.marker
+    @current_marker = human_goes_first? ? human.marker : computer.marker
+  end
+
+  def players_move
+    loop do
+      clear_screen_and_display_board
+      current_player_moves
+      clear_screen_and_display_board
+      display_computer_move if computer_turn?
+      break if board.someone_won_round? || board.full?
+      switch_current_player
     end
+  end
+
+  def computer_making_move
+    puts "#{computer.name} is making a move..."
+    sleep 1
   end
 
   def current_player_moves
@@ -283,15 +286,16 @@ class TTTGame
       human_moves
     else
       computer_moves
+      computer_making_move
     end
   end
 
   def switch_current_player
-    if @current_marker == human.marker
-      @current_marker = computer.marker
-    else
-      @current_marker = human.marker
-    end
+    @current_marker = if @current_marker == human.marker
+                        computer.marker
+                      else
+                        human.marker
+                      end
   end
 
   def join_list(array_available_squares)
@@ -318,28 +322,27 @@ class TTTGame
     board[chosen_square] = human.marker
   end
 
+  def amateur_computer_move
+    if board.available_squares.include?(winning_square)
+      winning_square
+    elsif board.available_squares.include?(5)
+      5
+    elsif board.available_squares.include?(at_risk_square)
+      at_risk_square
+    else
+      board.available_squares.sample
+    end
+  end
+
   def computer_moves
     if computer.name == "Clueless"
       computer_choice = board.available_squares.sample
     elsif computer.name == "Amateur"
-      if board.available_squares.include?(winning_square)
-        computer_choice = winning_square
-      elsif board.available_squares.include?(5)
-        computer_choice = 5
-      elsif board.available_squares.include?(at_risk_square)
-        computer_choice = at_risk_square
-      else
-        computer_choice = board.available_squares.sample 
-      end
-    elsif computer.name == "Intelligent"
-      computer_choice = board.available_squares.sample
-      board[computer_choice] = computer.marker
-    end   
+      computer_choice = amateur_computer_move
+    end
 
     board[computer_choice] = computer.marker
     computer.all_moves_made << computer_choice
-    puts "#{computer.name} is making a move..."
-    sleep 1
   end
 
   def computer_turn?
@@ -364,7 +367,7 @@ class TTTGame
           markers_on_line.one? do |square_value|
             square_value.is_a?(Integer)
           end
-        return markers_on_line.select do |square_value| 
+        return markers_on_line.select do |square_value|
           square_value == square_value.to_i
         end.first
       end
@@ -385,7 +388,7 @@ class TTTGame
           markers_on_line.one? do |square_value|
             square_value.is_a?(Integer)
           end
-        return markers_on_line.select do |square_value| 
+        return markers_on_line.select do |square_value|
           square_value == square_value.to_i
         end.first
       end
@@ -432,7 +435,8 @@ class TTTGame
 
   def display_score
     puts "\nSCORE:"
-    puts "#{human.name}: #{score.human_score}  #{computer.name}: #{score.computer_score}"
+    puts "#{human.name}: #{score.human_score}  "\
+         "#{computer.name}: #{score.computer_score}"
   end
 
   def display_winner
