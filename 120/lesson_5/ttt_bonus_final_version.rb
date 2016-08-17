@@ -343,7 +343,11 @@ class TTTGame
   end
 
   def two_identical_markers?(array_markers, marker)
-    board.all_squares.values_at(*array_markers).count(marker) == 2
+    square_values = board.all_squares.values_at(*array_markers)
+    square_values.count(marker) == 2 && 
+    square_values.one? do |square_value|
+      square_value == Board::EMPTY_SQUARE_MARKER
+    end
   end
 
   def actionable_square(marker)
