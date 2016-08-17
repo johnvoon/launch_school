@@ -1,7 +1,7 @@
 class Board
   attr_accessor :all_squares
 
-  EMPTY_SQUARE_MARKER = ' '
+  EMPTY_SQUARE_MARKER = ' '.freeze
   LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
           [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
           [[1, 5, 9], [3, 5, 7]]
@@ -69,7 +69,7 @@ class Board
 
   def three_identical_markers?(array_markers)
     array_markers.uniq.first != EMPTY_SQUARE_MARKER &&
-    array_markers.uniq.length == 1
+      array_markers.uniq.length == 1
   end
 end
 
@@ -344,10 +344,10 @@ class TTTGame
 
   def two_identical_markers?(array_markers, marker)
     square_values = board.all_squares.values_at(*array_markers)
-    square_values.count(marker) == 2 && 
-    square_values.one? do |square_value|
-      square_value == Board::EMPTY_SQUARE_MARKER
-    end
+    square_values.count(marker) == 2 &&
+      square_values.one? do |square_value|
+        square_value == Board::EMPTY_SQUARE_MARKER
+      end
   end
 
   def actionable_square(marker)
@@ -360,13 +360,17 @@ class TTTGame
       end
     end
   end
-  
+
+  def square_available?(square_number)
+    board.available_squares.include?(square_number)
+  end
+
   def amateur_computer_move
-    if board.available_squares.include?(actionable_square(computer.marker))
+    if square_available?(actionable_square(computer.marker))
       actionable_square(computer.marker)
-    elsif board.available_squares.include?(5)
+    elsif square_available?(5)
       5
-    elsif board.available_squares.include?(actionable_square(human.marker))
+    elsif square_available?(actionable_square(human.marker))
       actionable_square(human.marker)
     else
       board.available_squares.sample
