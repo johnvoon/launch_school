@@ -88,7 +88,7 @@ class Dealer < Participant
 
   def stay
     puts "\nDealer stays..."
-    sleep(1)
+    sleep(2)
   end
 end
 
@@ -274,7 +274,7 @@ class TwentyOneGame
         dealer.hit
         dealer.cards << deck.pop
         display_dealer_hand
-        enter_to_continue
+        sleep(2)
       end
     end
   end
@@ -328,13 +328,9 @@ class TwentyOneGame
 
   def increment_score
     case return_round_result
-    when :dealer_busted
+    when :dealer_busted, :human
       score.human += 1
-    when :human
-      score.human += 1
-    when :human_busted
-      score.dealer += 1
-    when :dealer
+    when :human_busted, :dealer
       score.dealer += 1
     end
   end
@@ -381,7 +377,7 @@ class TwentyOneGame
   end
 
   def display_goodbye_message
-    puts 'Thank you #{human.name} for playing Twenty-One! Good bye!'
+    puts "Thanks for playing Twenty-One #{human.name}! Goodbye!"
   end
 end
 
