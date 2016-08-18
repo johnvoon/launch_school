@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Score
   attr_accessor :human, :dealer
 
