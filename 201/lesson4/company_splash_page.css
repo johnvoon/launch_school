@@ -1,0 +1,154 @@
+body {
+  padding: 75px 0 0 0;
+  background: #2f2840 url("images/bg_body.gif");
+  font: normal 20px Helvetica, Arial, sans-serif;
+  color: #45494d;
+}
+
+.nav {
+  text-align: center;
+  padding: 25px 0 60px 0;
+}
+
+.nav__item {
+  display: inline;
+  padding: 0 42px;
+}
+
+.nav__link {
+  text-transform: uppercase;
+  font-size: 24px;
+  color: #cacaca;
+}
+
+.nav__link--active {
+  font-weight: bold;
+  color: #6db9ff;
+}
+
+.main {
+  padding: 75px 0 0 0;
+  background: white;
+}
+
+.logo {
+  padding: 0 0 50px 0;
+  text-align: center;
+}
+
+.main__heading {
+  text-align: center;
+  padding: 0 0 40px 0;
+  font-size: 36px;
+}
+
+.main__heading::before,
+.main__heading::after {
+  content: "\2022";
+}
+
+.main__section {
+  width: 1000px;
+  margin: 0 auto;
+  padding: 0 110px 50px 110px;
+}
+
+.main__section--team {
+  padding: 0 0 100px 0;
+}
+
+.project--subsequent {
+  border-top: 1px solid #cccccc;
+  padding: 50px 110px 50px 110px; 
+}
+
+.main__subheading {
+  text-align: center;
+  font-size: 24px;
+  color: #3e59b2;
+  padding: 0 0 20px 0;
+}
+
+.project__figure {
+  padding: 0 30px 20px 30px;
+  margin: 0;
+}
+
+.project__img {
+  width: 100%;
+}
+
+.main__description {
+  padding: 0 110px 100px 110px;
+  text-align: justify;
+}
+
+.main__description--project {
+  padding: 0 110px;
+}
+
+.team__list {
+  width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.team__item {
+  display: inline-block;
+  padding: 0 30px;
+  text-align: center;
+  box-sizing: border-box;
+  font-size: 24px;
+}
+
+.team__name {
+  color: #3e59b9;
+}
+
+.team__photo {
+  display: block;
+  margin: 0 0 20px 0;
+}
+
+.footer {
+  background: #e7e7e7;
+  padding: 75px;
+}
+
+.footer__ul {
+  margin: 0;
+  text-align: center;
+  padding: 30px;
+}
+
+.footer__about {
+  margin: 0 auto;
+  text-align: center;
+  width: 500px;
+  color: #b2b2b6;
+}
+
+.footer__item {
+  display: inline-block;
+  padding: 0 62px;
+}
+
+.footer__link {
+  display: block;
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+  background: transparent url("images/icons_social-media.png") 0 0 no-repeat;
+}
+
+.footer__link--facebook {
+  background-position: 0 -46px;
+}
+
+.footer__link--email {
+  background-position: 0 -92px;
+}
+
+.footer__link--instagram {
+  background-position: 0 -138px;
+}
