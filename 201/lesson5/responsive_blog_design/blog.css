@@ -1,0 +1,323 @@
+body {
+  font: normal 20px Helvetica, Arial, sans-serif;
+  color: #45494d;
+  background: #ffffff;
+}
+
+::selection {
+  color: #ffffff;
+  background: #50c3af;
+}
+
+::-moz-selection {
+  color: #ffffff;
+  background: #50c3af;
+}
+
+a {
+  text-decoration: none;
+  color: #50c3af;
+}
+
+h2 {
+  padding: 0 0 20px 0;
+  font-size: 36px;
+}
+
+h3 {
+  padding: 0 0 25px 0;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+p {
+  line-height: 150%;
+}
+
+body > header {
+  padding: 130px 0 50px 0;
+  background: #3d3d3d;
+}
+
+body > header h1 {
+  padding: 0 0 125px 0;
+  margin: 0 0 120px 0;
+  font-weight: normal;
+  font-size: 68px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 6px;
+  background: transparent url("images/logo.png") 50% 100% no-repeat;
+}
+
+body > header h1 a {
+  color: #ffffff;
+}
+
+nav ul {
+  text-align: center;
+}
+
+nav li {
+  display: inline;
+  padding: 0 25px;
+  text-transform: uppercase;
+}
+
+nav a {
+  color: #ffffff;
+}
+
+.active {
+  color: #50c3af;
+}
+
+nav a:hover {
+  color: #f5dc39;
+}
+
+main {
+  overflow: hidden; /*creates new block formatting context to contain floated .content element*/
+  max-width: 1000px;
+  padding: 80px 0 90px 0;
+  margin: 0 auto;
+}
+
+.content {
+  float: left; /*sufficient to trigger block formatting context, no need to set overflow to hidden*/
+  width: 65%;
+  padding: 0 11.5% 0 0;
+}
+
+.sidebar {
+  overflow: hidden; /*to prevent overlapping floated .content element*/
+  padding: 35px;
+  background: #f6f7f8;
+}
+
+article {
+  padding: 0 0 65px 0;
+}
+
+article p {
+  padding: 0 0 15px 0;
+}
+
+article h2 a {
+  color: inherit;
+}
+
+article h2 a:hover {
+  color: #50c3af;
+}
+
+.sidebar ul {
+  padding: 0 0 105px 20px;
+  font-size: 14px;
+}
+
+.sidebar li {
+  padding: 0 0 5px 0;
+  list-style: url("images/blt_ul.png");
+}
+
+.sidebar li > a {
+  color: #787b80;
+}
+
+.sidebar li a:hover {
+  color: #50c3af;
+}
+
+.sidebar p {
+  font-size: 14px;
+  color: #787b80;
+}
+
+.button {
+  display: inline-block;
+  padding: 5px 25px;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
+  background: #50c3af;
+  -webkit-appearance: none;
+}
+
+.disabled {
+  cursor: default;
+  background: #d2d5da;
+}
+
+.next {
+  margin-left: 25px;
+}
+
+footer {
+  max-width: 1000px;
+  padding: 15px 0 30px 0;
+  margin: 0 auto;
+  font: normal 12px Helvetica, Arial, sans-serif;
+  color: #7e8287;
+  border-top: 1px solid #d0d0d0;
+}
+
+.comments article {
+  padding: 0 0 30px 0;
+}
+
+.toggle_form { /*not displayed when UNCHECKED*/
+  display: none;
+}
+
+.toggle_form:checked + form { /*selects form element after CHECKED .toggle_form element*/
+  left: 0;
+  height: auto;
+  -webkit-transition: right 1000ms linear;
+  transition: left 400ms linear;
+  padding: 25px 0 0 0;
+}
+
+form { /*styles applied when form is unchecked, which is the default position*/
+  position: relative; /*enables top, bottom, left, right positioning*/
+  left: -100%; /*shifts entire element outside viewport*/
+  height: 0;
+}
+
+form dt {
+  padding: 0 0 5px 0;
+  font-weight: bold;
+}
+
+form dd {
+  padding: 0 0 15px 0;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 450px;
+  height: 38px;
+  padding: 5px 10px;
+  font: normal 15px Helvetica, Arial, sans-serif;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: inset 0 0 5px #0066cc;
+}
+
+input[type="email"]::-webkit-input-placeholder {
+  color: #999999;
+}
+
+input[type="email"]::-moz-placeholder {
+  color: #999999;
+}
+
+input[type="email"]::-moz-placeholder {
+  color: #999999;
+}
+
+input[type="email"]::-ms-input-placeholder {
+  color: #999999;
+}
+
+textarea {
+  width: 100%;
+  height: 140px;
+  resize: none;
+}
+
+.message {
+  display: none;
+  padding: 10px;
+  margin: 0 0 20px 0;
+  font-size: 13px;
+  color: #b00b00;
+  border-radius: 5px;
+  background: #e5a5a1;
+}
+
+.success {
+  color: #1b8b08;
+  background: #7bd96c;
+}
+
+@media (max-width: 768px) {
+  body > header {
+    padding: 40px 0 20px 0;
+  }
+
+  body > header h1 {
+    font-size: 48px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    float: none; /*gets rid of block formatting context so we need to re-implement it again by setting overflow to hidden*/
+    overflow: hidden;
+    width: auto;
+    padding: 0 25px 50px 25px;
+  }
+
+  .block {
+    display: inline-block;
+    width: 49%;
+    vertical-align: top;
+  }
+
+  .sidebar ul {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  body > header {
+    padding: 40px 0 0 0;
+  }
+
+  body > header h1 {
+    padding: 0 0 90px 0;
+    margin: 0 10px 50px 10px;
+    background-size: contain;
+  }
+
+  nav li {
+    display: inline-block;
+    width: 49%;
+    padding: 10px 0;
+    box-sizing: border-box;
+  }
+
+  .sidebar {
+    padding: 0 25px;
+    background: transparent;
+  }
+
+  .block {
+    display: block;
+    width: auto;
+    padding: 20px;
+    margin: 0 0 20px 0;
+    background: #f6f7f8;
+  }
+}
